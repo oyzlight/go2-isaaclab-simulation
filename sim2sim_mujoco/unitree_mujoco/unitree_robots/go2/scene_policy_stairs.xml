@@ -1,0 +1,31 @@
+<mujoco model="go2 five-centimeter stair validation">
+  <include file="go2.xml"/>
+  <statistic center="3.5 0 0.3" extent="5"/>
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <global azimuth="-130" elevation="-20"/>
+  </visual>
+  <asset>
+    <texture type="2d" name="ground_check" builtin="checker" rgb1="0.25 0.3 0.35"
+      rgb2="0.15 0.2 0.25" width="300" height="300"/>
+    <material name="ground_material" texture="ground_check" texuniform="true" texrepeat="10 10"/>
+    <material name="stair_material" rgba="0.65 0.7 0.75 1"/>
+  </asset>
+  <worldbody>
+    <light pos="3 0 4" dir="0 0 -1" directional="true"/>
+    <geom name="floor" type="plane" size="0 0 0.05" material="ground_material" friction="0.6 0.02 0.01"/>
+    <!-- Six 5 cm risers, 30 cm treads, then a 1.8 m platform and five down treads. -->
+    <geom name="up_1" type="box" pos="1.65 0 0.025" size="0.15 2 0.025" material="stair_material"/>
+    <geom name="up_2" type="box" pos="1.95 0 0.05" size="0.15 2 0.05" material="stair_material"/>
+    <geom name="up_3" type="box" pos="2.25 0 0.075" size="0.15 2 0.075" material="stair_material"/>
+    <geom name="up_4" type="box" pos="2.55 0 0.10" size="0.15 2 0.10" material="stair_material"/>
+    <geom name="up_5" type="box" pos="2.85 0 0.125" size="0.15 2 0.125" material="stair_material"/>
+    <geom name="up_6" type="box" pos="3.15 0 0.15" size="0.15 2 0.15" material="stair_material"/>
+    <geom name="platform" type="box" pos="4.2 0 0.15" size="0.9 2 0.15" material="stair_material"/>
+    <geom name="down_5" type="box" pos="5.25 0 0.125" size="0.15 2 0.125" material="stair_material"/>
+    <geom name="down_4" type="box" pos="5.55 0 0.10" size="0.15 2 0.10" material="stair_material"/>
+    <geom name="down_3" type="box" pos="5.85 0 0.075" size="0.15 2 0.075" material="stair_material"/>
+    <geom name="down_2" type="box" pos="6.15 0 0.05" size="0.15 2 0.05" material="stair_material"/>
+    <geom name="down_1" type="box" pos="6.45 0 0.025" size="0.15 2 0.025" material="stair_material"/>
+  </worldbody>
+</mujoco>
