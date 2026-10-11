@@ -6,6 +6,45 @@
 
 [七段独立视频目录](video/all_categories_20261011/README.md) · [完整合辑（约84秒）](video/all_categories_20261011/00_all_categories_12493_and_19491.mp4)
 
+### 七类地形完整合辑
+
+点击下方播放器播放；原始 MP4 下载链接保留在上方。
+
+https://github.com/user-attachments/assets/9d5a960f-168a-42c4-a76b-e51768c4e702
+
+<details>
+<summary>展开七段独立视频（可在本页播放）</summary>
+
+### 1. 平地移动 · model_12493
+
+https://github.com/user-attachments/assets/d554e843-0586-4d47-81d6-71048c7055dd
+
+### 2. 碎石路 · model_12493
+
+https://github.com/user-attachments/assets/e919be32-9b13-4ffb-bb17-69ba9458a8b6
+
+### 3. 上10°坡 · model_12493
+
+https://github.com/user-attachments/assets/4cbb06e3-1b8d-467e-908c-c20f3a995980
+
+### 4. 下10°坡 · model_12493
+
+https://github.com/user-attachments/assets/69ca4bf7-00a4-4ee4-a380-24ee8554e7c5
+
+### 5. 上8cm楼梯 · model_12493
+
+https://github.com/user-attachments/assets/2f96d26f-5c66-4bea-b098-6287053baa80
+
+### 6. 下8cm楼梯 · model_12493
+
+https://github.com/user-attachments/assets/389eb453-3660-4668-9730-cbb5b0c7767b
+
+### 7. 上28cm单级台阶 · model_19491
+
+https://github.com/user-attachments/assets/c40ba55b-c742-40bc-9cad-f23a78c25fcd
+
+</details>
+
 | 场景 | 策略 |
 |---|---|
 | 平地、碎石路、上下10°坡、上下8cm楼梯 | model_12493.pt |
