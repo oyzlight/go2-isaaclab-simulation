@@ -13,7 +13,10 @@ class DemoTerrainCfg(SubTerrainBaseCfg):
     function = demo_terrain
     kind: str = "flat"
     gravel_seed: int = 42
-    rock_count: int = 96
+    rock_count: int = 600
+    rock_height_range: tuple[float, float] = (0.04, 0.08)
+    rock_radius_x_range: tuple[float, float] = (0.08, 0.16)
+    rock_radius_y_range: tuple[float, float] = (0.07, 0.14)
     slope_degrees: float = 10.0
     ramp_length: float = 4.0
     step_height: float = 0.08

@@ -29,15 +29,34 @@ def demo_terrain(difficulty, cfg):
     if cfg.kind == "flat":
         return [box(0, length, 0)], np.array((origin_x, width / 2, 0.0))
     if cfg.kind == "rubble":
+        if cfg.rock_count < 1:
+            raise ValueError("Rubble needs at least one rock")
+        for bounds in (cfg.rock_height_range, cfg.rock_radius_x_range, cfg.rock_radius_y_range):
+            if not 0 < bounds[0] <= bounds[1]:
+                raise ValueError("Rock height and radius ranges must be positive and ordered")
         meshes = [box(0, length, 0)]
         rng = np.random.default_rng(cfg.gravel_seed)
-        for _ in range(cfg.rock_count):
+        span, lane_width = 9.0 - edge, 2.0
+        columns = int(np.ceil(np.sqrt(cfg.rock_count * span / lane_width)))
+        rows = int(np.ceil(cfg.rock_count / columns))
+        # Jittered strata spread obstacles across the route instead of leaving
+        # large accidental gaps in the centre line. Keep a clear spawn pad.
+        cells = rng.choice(columns * rows, cfg.rock_count, replace=False)
+        for cell in cells:
             # Fixed irregular rocks, not a simulated loose granular bed.
-            height = rng.uniform(0.02, 0.06)
+            height = rng.uniform(*cfg.rock_height_range)
             mesh = trimesh.creation.icosphere(subdivisions=0, radius=1.0)
-            mesh.apply_scale((rng.uniform(0.06, 0.13), rng.uniform(0.05, 0.11), height * 0.7))
+            mesh.apply_scale((rng.uniform(*cfg.rock_radius_x_range),
+                              rng.uniform(*cfg.rock_radius_y_range), 1.0))
+            # Set the actual mesh top to the requested height, with its bottom
+            # buried in the floor so collision meshes cannot float above it.
+            z = mesh.vertices[:, 2].copy()
+            mesh.vertices[:, 2] = -0.015 + (z - z.min()) / np.ptp(z) * (height + 0.015)
             mesh.apply_transform(trimesh.transformations.rotation_matrix(rng.uniform(-np.pi, np.pi), (0, 0, 1)))
-            mesh.apply_translation((rng.uniform(edge, 9.0), rng.uniform(width/2 - 1, width/2 + 1), height * 0.3))
+            column, row = divmod(int(cell), rows)
+            x = edge + (column + rng.uniform(0.15, 0.85)) * span / columns
+            y = width / 2 - lane_width / 2 + (row + rng.uniform(0.15, 0.85)) * lane_width / rows
+            mesh.apply_translation((x, y, 0.0))
             meshes.append(colour(mesh, (110, 125, 140, 255)))
         return meshes, np.array((origin_x, width / 2, 0.0))
     if cfg.kind in ("uphill", "downhill"):

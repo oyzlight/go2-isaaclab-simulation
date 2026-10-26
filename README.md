@@ -12,9 +12,11 @@
 
 https://github.com/user-attachments/assets/d554e843-0586-4d47-81d6-71048c7055dd
 
-### 2. 碎石路 · model_12493
+### 2. 密集碎石路 · 600块 / 4–8cm · model_12493
 
-https://github.com/user-attachments/assets/e919be32-9b13-4ffb-bb17-69ba9458a8b6
+2026-10-26重录：相同区域的石块数从96增加到600，采用分层随机分布，减少空白通道，并提高石块起伏；其余六段保持原样。仍使用原权重，没有重新训练。合辑和下载文件也已同步更新。
+
+https://github.com/user-attachments/assets/a75a9b4d-63e1-4cbc-bc95-9f780ff0a527
 
 ### 3. 上10°坡 · model_12493
 
