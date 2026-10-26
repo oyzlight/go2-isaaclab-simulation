@@ -99,3 +99,16 @@ class GO2UpstairsVideoEnvCfg(GO2TerrainVideoEnvCfg):
 @configclass
 class GO2DownstairsVideoEnvCfg(GO2TerrainVideoEnvCfg):
     demo_kind = "stairs_down"
+
+
+@configclass
+class GO2StepDown28cmVideoEnvCfg(GO2TerrainVideoEnvCfg):
+    """One vertical 28 cm drop, not a flight of small stairs."""
+
+    demo_kind = "stairs_down"
+
+    def __post_init__(self):
+        super().__post_init__()
+        terrain = self.scene.terrain.terrain_generator.sub_terrains["demo"]
+        terrain.step_count = 1
+        terrain.step_height = 0.28

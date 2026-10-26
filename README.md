@@ -4,9 +4,9 @@
 
 ## 演示视频
 
-[七段独立视频目录](video/all_categories_20261011/README.md) · [完整合辑（约96秒）](video/all_categories_20261011/00_all_categories_12493_and_19491.mp4)
+[八段独立视频目录](video/all_categories_20261011/README.md) · [完整合辑（约108秒，含下28cm失败测试）](video/all_categories_20261011/00_all_categories_12493_and_19491.mp4)
 
-以下七段视频直接在首页播放，无需展开。标题标明地形类别与使用的策略权重；原始文件和合辑下载链接保留在上方。
+以下八段视频直接在首页播放，无需展开。标题标明地形类别与使用的策略权重；第8段为尚未稳定通过的能力边界测试，不是成功通行演示。原始文件和合辑下载链接保留在上方。
 
 ### 1. 平地移动 · model_12493
 
@@ -42,10 +42,17 @@ https://github.com/user-attachments/assets/389eb453-3660-4668-9730-cbb5b0c7767b
 
 https://github.com/user-attachments/assets/c40ba55b-c742-40bc-9cad-f23a78c25fcd
 
+### 8. 下28cm单级台阶 · 能力边界测试（尚未稳定通过）· model_12493
+
+**此段包含倒地和自动重置，不代表模型已掌握下28cm。** 实测当前判据下，0.5m/s的12493为5/16，19491为0/16；12493的其他测试速度也未稳定通过。录制采用12493、0.5m/s，该回合未通过，整段约12秒有3次自动重置。保留真实失败，没有重新训练、关闭终止条件或挑选成功种子。[测试条件与逐组记录](video/all_categories_20261011/STEP_DOWN28_EVALUATION_20261027.json)。
+
+https://github.com/user-attachments/assets/310a6198-02e4-4544-8539-502d3e30a5e6
+
 | 场景 | 策略 |
 |---|---|
 | 平地、碎石路、上下15°坡、上下8cm楼梯 | model_12493.pt |
 | 上28cm单级台阶 | model_19491.pt |
+| 下28cm单级台阶（未稳定通过） | model_12493.pt |
 
 视频是固定条件下的单次仿真演示，不是统计成功率，也不是同一个策略通过所有地形。碎石为固定小石块；8cm楼梯共4级。本仓库不包含训练权重、训练日志或本机环境。
 
@@ -63,21 +70,22 @@ https://github.com/user-attachments/assets/c40ba55b-c742-40bc-9cad-f23a78c25fcd
 8. **不要默认最新权重最好。** 同时看速度误差、触地终止、回合长度、地形等级和确定性Play。本次通用地形采用12493，上28cm采用19491，避免把专项能力当成通用能力。
 9. **Sim2Sim先对齐接口，再调策略。** 检查关节顺序和符号、速度参考系、last_action时序、动作缩放、PD参数及力矩限制。曾通过修复部署接口改善MuJoCo表现；不要一遇到失败就认定必须重新训练。
 10. **教师学生是下一阶段，不是关闭高度扫描。** 先评估并冻结带高度信息的教师，再训练只读部署可得本体观测与历史的GRU学生；分别配置观测与归一化。低模仿损失不代表无高度信息也能通过全部地形。
+11. **上台能力不能直接等同于下台能力。** 本次单级28cm下台测试中，已有上台策略和通用策略都未稳定通过。应把下台落地姿态、冲击、终止和完整通行单独评估，不能用上台成功或8cm楼梯表现替代28cm下台验证。
 
 ### 教师—学生网络（后续方案，尚未训练）
 
 拟用当前235维高度感知策略作教师，让学生通过GRU利用本体反馈历史，学习教师的12维动作。原48维基础观测含仿真真值线速度：真机学生需要状态估计器提供该速度，或移除它并重新定义45维输入。GRU能学习历史与接触后的反馈，但不能凭空提前看见未知台阶，28cm高台和下台能力必须重新验证。
 
-现有七个视频仍是带高度扫描的PPO策略，没有完成学生蒸馏。PPO的Actor/Critic也不等于教师/学生。后续需新增观测分组、循环学生、蒸馏训练、隐藏状态重置及Sim2Sim适配；详见[训练总结第9节：教师—学生网络](TRAINING_SUMMARY.md)。算法思路参见[RSL-RL官方蒸馏说明](https://leggedrobotics.github.io/rsl_rl/guide/overview.html)。
+现有八个视频仍是带高度扫描的PPO策略，没有完成学生蒸馏。PPO的Actor/Critic也不等于教师/学生。后续需新增观测分组、循环学生、蒸馏训练、隐藏状态重置及Sim2Sim适配；详见[训练总结第9节：教师—学生网络](TRAINING_SUMMARY.md)。算法思路参见[RSL-RL官方蒸馏说明](https://leggedrobotics.github.io/rsl_rl/guide/overview.html)。
 
-完整记录：[通用行走训练总结与历史指标](TRAINING_SUMMARY.md) · [28cm上台训练](HIGH_STEP_28CM.md) · [站姿问题与约束](HIGH_STEP_STAND.md) · [Sim2Sim接口与验证](sim2sim_mujoco/README.md)。历史指标对应各阶段记录，不能视为当前七个视频的统计成功率。
+完整记录：[通用行走训练总结与历史指标](TRAINING_SUMMARY.md) · [28cm上台训练](HIGH_STEP_28CM.md) · [站姿问题与约束](HIGH_STEP_STAND.md) · [Sim2Sim接口与验证](sim2sim_mujoco/README.md)。历史指标对应各阶段记录，不能视为当前八个视频的统计成功率。
 
 ## 目录
 
 - `source/go2_demo/`：机器人配置、任务注册、观测、奖励、地形、课程与PPO配置。
 - `scripts/rsl_rl/`：训练、播放、评估、高度观测权重扩展和录像脚本。
 - `sim2sim_mujoco/`：MuJoCo部署、方向键控制、测试场景与接口测试。
-- `video/all_categories_20261011/`：七段独立录像、合辑和分类说明。
+- `video/all_categories_20261011/`：八段独立录像（含失败测试）、合辑和分类说明。
 - `TRAINING_SUMMARY.md`：训练过程、问题与心得。
 - `HIGH_STEP_28CM.md`、`HIGH_STEP_STAND.md`：28cm台阶与站姿训练说明。
 

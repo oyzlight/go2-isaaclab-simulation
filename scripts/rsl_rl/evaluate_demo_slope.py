@@ -1,4 +1,4 @@
-"""Evaluate and optionally record a fixed ramp without changing/training a policy."""
+"""Evaluate/record a ramp or a single downward ledge without training a policy."""
 
 import argparse
 import json
@@ -10,6 +10,8 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--checkpoint", required=True)
 parser.add_argument("--direction", choices=("uphill", "downhill"), required=True)
 parser.add_argument("--slope_degrees", type=float, default=20.0)
+parser.add_argument("--step_down_height", type=float, help="Use a single vertical ledge instead of a ramp.")
+parser.add_argument("--forward_speed", type=float, help="Override the fixed forward command for this evaluation.")
 parser.add_argument("--num_envs", type=int, default=16)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--duration", type=float, default=18.0)
@@ -20,6 +22,10 @@ AppLauncher.add_app_launcher_args(parser)
 args = parser.parse_args()
 if not 0 < args.slope_degrees < 30 or args.num_envs < 1 or not 1 < args.duration < 20:
     parser.error("Require 0 < slope < 30 degrees, positive environments, 1 < duration < 20 seconds")
+if args.step_down_height is not None and (args.direction != "downhill" or not 0 < args.step_down_height <= .30):
+    parser.error("Single ledge requires downhill direction and 0 < height <= 0.30 m")
+if args.forward_speed is not None and not .1 <= args.forward_speed <= 1.0:
+    parser.error("Use a forward command in the tested policy range 0.1..1.0 m/s")
 if args.video_folder and args.num_envs != 1:
     parser.error("Record one robot; run multi-environment evaluations separately")
 if args.video_folder:
@@ -38,13 +44,23 @@ from isaaclab_rl.rsl_rl import RslRlVecEnvWrapper
 
 def main():
     task = "Go2-Demo-" + ("Uphill" if args.direction == "uphill" else "Downhill") + "-Play-v0"
+    is_step = args.step_down_height is not None
+    if is_step:
+        task = "Go2-Demo-Step-Down28cm-Play-v0"
     cfg = load_cfg_from_registry(task, "env_cfg_entry_point")
     agent = load_cfg_from_registry(task, "rsl_rl_cfg_entry_point")
     cfg.seed = agent.seed = args.seed
     cfg.scene.num_envs = args.num_envs
     cfg.sim.device = args.device
+    if args.forward_speed is not None:
+        cfg.commands.base_velocity.ranges.lin_vel_x = (args.forward_speed, args.forward_speed)
     terrain = cfg.scene.terrain.terrain_generator.sub_terrains["demo"]
     terrain.slope_degrees = args.slope_degrees
+    if is_step:
+        terrain.step_count = 1
+        terrain.step_height = args.step_down_height
+    finish_advance = 1.8 if is_step else 5.6
+    finish_hold = 2.0 if is_step else 1.0
     # Stay within the middle half of the 4 m ramp: +/-1 m leaves a full
     # metre of edge margin. Lateral drift is not equivalent to falling.
     lateral_limit = cfg.scene.terrain.terrain_generator.size[1] / 4
@@ -93,14 +109,15 @@ def main():
                 progress[valid] = relative[valid, 0]
                 lateral[valid] = torch.maximum(lateral[valid], relative[valid, 1].abs())
                 tilt[valid] = torch.maximum(tilt[valid], angle[valid])
-                # Ramp starts 1 m ahead and ends 5 m ahead of the spawn point.
-                # Require the body 0.6 m beyond it, then another second upright.
-                newly_crossed = valid & (crossed < 0) & (relative[:, 0] >= 5.6)
+                # The ledge is 1 m ahead; the ramp ends 5 m ahead. Require
+                # clearance beyond the edge and verify an actual descent.
+                vertical_ok = (relative[:, 2] <= -.7 * args.step_down_height) if is_step else torch.ones_like(valid)
+                newly_crossed = valid & vertical_ok & (crossed < 0) & (relative[:, 0] >= finish_advance)
                 crossed[newly_crossed] = elapsed[newly_crossed]
                 bad = valid & ((angle >= 45) | (relative[:, 1].abs() >= lateral_limit))
                 unsafe |= bad
                 terminated |= active & done.bool()
-                passed = valid & ~unsafe & (crossed >= 0) & (elapsed - crossed >= 1.) & (relative[:, 0] >= 5.3)
+                passed = valid & vertical_ok & ~unsafe & (crossed >= 0) & (elapsed - crossed >= finish_hold) & (relative[:, 0] >= finish_advance - .3)
                 success |= passed
                 active &= ~(done.bool() | bad | passed)
                 if step % 10 == 0 and count == 1:
@@ -116,19 +133,23 @@ def main():
                    "max_tilt_deg": float(tilt[i]), "max_lateral_drift_m": float(lateral[i])}
                   for i in range(count)]
         result = {"task": task, "checkpoint": str(Path(args.checkpoint).resolve()),
-                  "slope_degrees": args.slope_degrees, "direction": args.direction,
+                  "slope_degrees": None if is_step else args.slope_degrees, "direction": args.direction,
+                  "step_height_m": args.step_down_height,
+                  "command_speed_mps": cfg.commands.base_velocity.ranges.lin_vel_x[0],
                   "seed": args.seed, "ramp_length_m": terrain.ramp_length,
                   "duration_budget_s": args.duration, "environment_count": count,
                   "passed": int(success.sum()), "trials": trials, "trajectory": traces,
                   "whole_run_reset_count": reset_count.cpu().tolist(),
                   "whole_run_max_tilt_deg": whole_run_tilt.cpu().tolist(),
                   "lateral_limit_m": lateral_limit,
-                  "criterion": "advance 5.6m beyond spawn and stay upright for 1s; no reset, tilt>=45deg or drift outside middle half of ramp before pass",
+                  "finish_advance_m": finish_advance, "upright_hold_s": finish_hold,
+                  "criterion": "cross the ledge/ramp plus body clearance, then remain upright; no reset, tilt>=45deg or drift outside middle half; ledge must show an actual height drop",
                   "video": str(Path(args.video_folder).resolve() / (args.video_name + "-step-0.mp4")) if args.video_folder else None}
         output = Path(args.output).resolve()
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(json.dumps(result, indent=2), encoding="utf-8")
-        print(f"[SLOPE RESULT] {args.direction} {args.slope_degrees:g}deg: {int(success.sum())}/{count} passed; report={output}", flush=True)
+        label = f"step down {args.step_down_height:g}m" if is_step else f"{args.direction} {args.slope_degrees:g}deg"
+        print(f"[ROUTE RESULT] {label}: {int(success.sum())}/{count} passed; report={output}", flush=True)
     finally:
         env.close()
 

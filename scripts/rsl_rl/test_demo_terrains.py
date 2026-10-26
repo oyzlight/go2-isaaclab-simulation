@@ -78,6 +78,17 @@ class DemoTerrainTests(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 geometry.demo_terrain(.5, cfg)
 
+    def test_single_step_down_has_one_exact_28cm_drop(self):
+        cfg = self.cfg("stairs_down")
+        cfg.step_count = 1
+        cfg.step_height = .28
+        meshes, origin = geometry.demo_terrain(.5, cfg)
+        self.assertEqual(len(meshes), 2)
+        self.assertAlmostEqual(origin[2], .28)
+        self.assertAlmostEqual(meshes[0].bounds[1, 2], .28)
+        self.assertAlmostEqual(meshes[1].bounds[1, 2], 0)
+        self.assertAlmostEqual(meshes[0].bounds[1, 0], meshes[1].bounds[0, 0])
+
 
 if __name__ == "__main__":
     unittest.main()

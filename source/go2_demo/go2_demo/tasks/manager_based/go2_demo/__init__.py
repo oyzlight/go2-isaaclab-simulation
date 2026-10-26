@@ -14,6 +14,7 @@ for _demo_name, _demo_cfg in (
     ("Downhill", "GO2DownhillVideoEnvCfg"),
     ("Stairs-Up8cm", "GO2UpstairsVideoEnvCfg"),
     ("Stairs-Down8cm", "GO2DownstairsVideoEnvCfg"),
+    ("Step-Down28cm", "GO2StepDown28cmVideoEnvCfg"),
 ):
     gym.register(
         id=f"Go2-Demo-{_demo_name}-Play-v0",
