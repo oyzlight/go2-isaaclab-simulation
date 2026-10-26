@@ -4,7 +4,7 @@
 
 ## 演示视频
 
-[七段独立视频目录](video/all_categories_20261011/README.md) · [完整合辑（约84秒）](video/all_categories_20261011/00_all_categories_12493_and_19491.mp4)
+[七段独立视频目录](video/all_categories_20261011/README.md) · [完整合辑（约96秒）](video/all_categories_20261011/00_all_categories_12493_and_19491.mp4)
 
 以下七段视频直接在首页播放，无需展开。标题标明地形类别与使用的策略权重；原始文件和合辑下载链接保留在上方。
 
@@ -18,13 +18,17 @@ https://github.com/user-attachments/assets/d554e843-0586-4d47-81d6-71048c7055dd
 
 https://github.com/user-attachments/assets/a75a9b4d-63e1-4cbc-bc95-9f780ff0a527
 
-### 3. 上10°坡 · model_12493
+### 3. 上15°坡 · model_12493
 
-https://github.com/user-attachments/assets/4cbb06e3-1b8d-467e-908c-c20f3a995980
+2026-10-27重录：坡角从10°提高到15°，水平长度4m、高差约1.07m，录像约18秒，展示完整上坡及到达平台。16组并行测试全部达到本次判据，录像过程中无重置。
 
-### 4. 下10°坡 · model_12493
+https://github.com/user-attachments/assets/1f321702-c768-4e57-8ac2-3b75646c32e5
 
-https://github.com/user-attachments/assets/69ca4bf7-00a4-4ee4-a380-24ee8554e7c5
+### 4. 下15°坡 · model_12493
+
+同样使用15°坡面和约18秒完整录像；下坡16组并行测试全部达到本次判据，录像过程中无重置。[测试条件与逐组结果](video/all_categories_20261011/SLOPE_EVALUATION_20261027.json)。判据为越过坡面后再稳定前进1秒、无重置、倾角小于45°，侧偏保持在坡面中间半幅。这不是最大爬坡能力测定或任意场景成功率保证。
+
+https://github.com/user-attachments/assets/3751591c-b78d-45d3-b4a9-f719dd5a29f0
 
 ### 5. 上8cm楼梯 · model_12493
 
@@ -40,7 +44,7 @@ https://github.com/user-attachments/assets/c40ba55b-c742-40bc-9cad-f23a78c25fcd
 
 | 场景 | 策略 |
 |---|---|
-| 平地、碎石路、上下10°坡、上下8cm楼梯 | model_12493.pt |
+| 平地、碎石路、上下15°坡、上下8cm楼梯 | model_12493.pt |
 | 上28cm单级台阶 | model_19491.pt |
 
 视频是固定条件下的单次仿真演示，不是统计成功率，也不是同一个策略通过所有地形。碎石为固定小石块；8cm楼梯共4级。本仓库不包含训练权重、训练日志或本机环境。

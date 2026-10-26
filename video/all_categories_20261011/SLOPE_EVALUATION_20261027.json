@@ -1,0 +1,398 @@
+{
+  "date": "2026-10-27",
+  "checkpoint": "model_12493.pt",
+  "seed": 42,
+  "slope_degrees": 15,
+  "horizontal_ramp_length_m": 4,
+  "ramp_width_m": 4,
+  "rise_m": 1.0717967697244908,
+  "duration_budget_s": 18,
+  "criterion": {
+    "advance_from_spawn_m": 5.6,
+    "upright_hold_after_crossing_s": 1,
+    "tilt_limit_deg": 45,
+    "lateral_limit_m": 1,
+    "reject_reset_before_pass": true
+  },
+  "note": "One seed, 16 parallel simulated environments per direction plus one recorded trial; not a general success-rate guarantee or maximum-slope search. Existing weights unchanged.",
+  "directions": {
+    "uphill": {
+      "evaluation": {
+        "environment_count": 16,
+        "passed": 16,
+        "trials": [
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.055408954620361,
+            "elapsed_s": 14.56014347076416,
+            "crossed_at_s": 13.560120582580566,
+            "max_tilt_deg": 16.004981994628906,
+            "max_lateral_drift_m": 0.49288296699523926
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.058945178985596,
+            "elapsed_s": 13.780125617980957,
+            "crossed_at_s": 12.780102729797363,
+            "max_tilt_deg": 14.988744735717773,
+            "max_lateral_drift_m": 0.29168447852134705
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.0590033531188965,
+            "elapsed_s": 14.56014347076416,
+            "crossed_at_s": 13.560120582580566,
+            "max_tilt_deg": 15.59291934967041,
+            "max_lateral_drift_m": 0.4727976322174072
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.0526862144470215,
+            "elapsed_s": 15.220158576965332,
+            "crossed_at_s": 14.220135688781738,
+            "max_tilt_deg": 15.660416603088379,
+            "max_lateral_drift_m": 0.6089188456535339
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.062342643737793,
+            "elapsed_s": 13.420117378234863,
+            "crossed_at_s": 12.42009449005127,
+            "max_tilt_deg": 13.468484878540039,
+            "max_lateral_drift_m": 0.2559961676597595
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.056622505187988,
+            "elapsed_s": 15.040154457092285,
+            "crossed_at_s": 14.040131568908691,
+            "max_tilt_deg": 15.817427635192871,
+            "max_lateral_drift_m": 0.5741374492645264
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.064502716064453,
+            "elapsed_s": 13.660122871398926,
+            "crossed_at_s": 12.660099983215332,
+            "max_tilt_deg": 14.670039176940918,
+            "max_lateral_drift_m": 0.27063626050949097
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.05684757232666,
+            "elapsed_s": 13.880127906799316,
+            "crossed_at_s": 12.880105018615723,
+            "max_tilt_deg": 14.982020378112793,
+            "max_lateral_drift_m": 0.32128578424453735
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.054082870483398,
+            "elapsed_s": 15.260159492492676,
+            "crossed_at_s": 14.260136604309082,
+            "max_tilt_deg": 15.888635635375977,
+            "max_lateral_drift_m": 0.6000858545303345
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.055960655212402,
+            "elapsed_s": 16.100177764892578,
+            "crossed_at_s": 15.1001558303833,
+            "max_tilt_deg": 15.967942237854004,
+            "max_lateral_drift_m": 0.7223220467567444
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.058126926422119,
+            "elapsed_s": 14.320137977600098,
+            "crossed_at_s": 13.320115089416504,
+            "max_tilt_deg": 15.717551231384277,
+            "max_lateral_drift_m": 0.39705580472946167
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.070630073547363,
+            "elapsed_s": 14.02013111114502,
+            "crossed_at_s": 13.020108222961426,
+            "max_tilt_deg": 15.350652694702148,
+            "max_lateral_drift_m": 0.340653657913208
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.062257766723633,
+            "elapsed_s": 13.320115089416504,
+            "crossed_at_s": 12.32009220123291,
+            "max_tilt_deg": 14.224344253540039,
+            "max_lateral_drift_m": 0.2678104341030121
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.062817573547363,
+            "elapsed_s": 13.940129280090332,
+            "crossed_at_s": 12.940106391906738,
+            "max_tilt_deg": 14.755990028381348,
+            "max_lateral_drift_m": 0.3207658529281616
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.061301231384277,
+            "elapsed_s": 13.360116004943848,
+            "crossed_at_s": 12.360093116760254,
+            "max_tilt_deg": 14.800868034362793,
+            "max_lateral_drift_m": 0.2763892710208893
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.058465003967285,
+            "elapsed_s": 14.34013843536377,
+            "crossed_at_s": 13.340115547180176,
+            "max_tilt_deg": 15.63689136505127,
+            "max_lateral_drift_m": 0.41304513812065125
+          }
+        ]
+      },
+      "recording": {
+        "passed": 1,
+        "trials": [
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.058968544006348,
+            "elapsed_s": 14.120133399963379,
+            "crossed_at_s": 13.120110511779785,
+            "max_tilt_deg": 15.25584602355957,
+            "max_lateral_drift_m": 0.35435426235198975
+          }
+        ],
+        "whole_run_reset_count": [
+          0
+        ],
+        "whole_run_max_tilt_deg": [
+          15.25584602355957
+        ]
+      }
+    },
+    "downhill": {
+      "evaluation": {
+        "environment_count": 16,
+        "passed": 16,
+        "trials": [
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.072257995605469,
+            "elapsed_s": 12.00008487701416,
+            "crossed_at_s": 11.000061988830566,
+            "max_tilt_deg": 16.09856414794922,
+            "max_lateral_drift_m": 0.14708854258060455
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.066673278808594,
+            "elapsed_s": 12.10008716583252,
+            "crossed_at_s": 11.100064277648926,
+            "max_tilt_deg": 15.927022933959961,
+            "max_lateral_drift_m": 0.18484199047088623
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.06915283203125,
+            "elapsed_s": 12.080086708068848,
+            "crossed_at_s": 11.080063819885254,
+            "max_tilt_deg": 16.487462997436523,
+            "max_lateral_drift_m": 0.1466292142868042
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.07609224319458,
+            "elapsed_s": 11.960083961486816,
+            "crossed_at_s": 10.960061073303223,
+            "max_tilt_deg": 18.535289764404297,
+            "max_lateral_drift_m": 0.07884354889392853
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.070706367492676,
+            "elapsed_s": 12.260090827941895,
+            "crossed_at_s": 11.2600679397583,
+            "max_tilt_deg": 15.868452072143555,
+            "max_lateral_drift_m": 0.1909618377685547
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.0727057456970215,
+            "elapsed_s": 11.9000825881958,
+            "crossed_at_s": 10.900059700012207,
+            "max_tilt_deg": 18.291845321655273,
+            "max_lateral_drift_m": 0.07274620980024338
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.0648088455200195,
+            "elapsed_s": 12.140088081359863,
+            "crossed_at_s": 11.14006519317627,
+            "max_tilt_deg": 16.433385848999023,
+            "max_lateral_drift_m": 0.16888883709907532
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.070153713226318,
+            "elapsed_s": 12.10008716583252,
+            "crossed_at_s": 11.100064277648926,
+            "max_tilt_deg": 16.49350357055664,
+            "max_lateral_drift_m": 0.16197463870048523
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.067855358123779,
+            "elapsed_s": 11.880082130432129,
+            "crossed_at_s": 10.880059242248535,
+            "max_tilt_deg": 18.890851974487305,
+            "max_lateral_drift_m": 0.06815117597579956
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.069065093994141,
+            "elapsed_s": 11.860081672668457,
+            "crossed_at_s": 10.860058784484863,
+            "max_tilt_deg": 18.938932418823242,
+            "max_lateral_drift_m": 0.030263353139162064
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.073962688446045,
+            "elapsed_s": 12.020085334777832,
+            "crossed_at_s": 11.020062446594238,
+            "max_tilt_deg": 16.405160903930664,
+            "max_lateral_drift_m": 0.17646685242652893
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.064373016357422,
+            "elapsed_s": 12.040085792541504,
+            "crossed_at_s": 11.04006290435791,
+            "max_tilt_deg": 16.800046920776367,
+            "max_lateral_drift_m": 0.16082249581813812
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.073296546936035,
+            "elapsed_s": 12.22008991241455,
+            "crossed_at_s": 11.220067024230957,
+            "max_tilt_deg": 15.875832557678223,
+            "max_lateral_drift_m": 0.18856459856033325
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.0720343589782715,
+            "elapsed_s": 12.040085792541504,
+            "crossed_at_s": 11.04006290435791,
+            "max_tilt_deg": 15.883384704589844,
+            "max_lateral_drift_m": 0.17222115397453308
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.066310882568359,
+            "elapsed_s": 12.200089454650879,
+            "crossed_at_s": 11.200066566467285,
+            "max_tilt_deg": 15.384661674499512,
+            "max_lateral_drift_m": 0.1955478936433792
+          },
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.068724155426025,
+            "elapsed_s": 12.020085334777832,
+            "crossed_at_s": 11.020062446594238,
+            "max_tilt_deg": 15.922158241271973,
+            "max_lateral_drift_m": 0.16094085574150085
+          }
+        ]
+      },
+      "recording": {
+        "passed": 1,
+        "trials": [
+          {
+            "passed": true,
+            "terminated_before_pass": false,
+            "unsafe_before_pass": false,
+            "x_progress_m": 6.070156097412109,
+            "elapsed_s": 12.080086708068848,
+            "crossed_at_s": 11.080063819885254,
+            "max_tilt_deg": 15.916866302490234,
+            "max_lateral_drift_m": 0.16950556635856628
+          }
+        ],
+        "whole_run_reset_count": [
+          0
+        ],
+        "whole_run_max_tilt_deg": [
+          15.916866302490234
+        ]
+      }
+    }
+  }
+}

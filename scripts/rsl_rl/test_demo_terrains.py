@@ -42,12 +42,15 @@ class DemoTerrainTests(unittest.TestCase):
                 self.assertAlmostEqual(a.bounds[1, 0], b.bounds[0, 0])
 
     def test_ramp_slope_and_spawn_height(self):
-        height = np.tan(np.deg2rad(10)) * 4
-        for kind, expected_start in (("uphill", 0), ("downhill", height)):
-            meshes, origin = geometry.demo_terrain(.5, self.cfg(kind))
-            self.assertAlmostEqual(origin[2], expected_start)
-            top = meshes[1].vertices[4:, 2]
-            self.assertAlmostEqual(top[1] - top[0], height if kind == "uphill" else -height)
+        for degrees in (10, 15, 20):
+            height = np.tan(np.deg2rad(degrees)) * 4
+            for kind, expected_start in (("uphill", 0), ("downhill", height)):
+                cfg = self.cfg(kind)
+                cfg.slope_degrees = degrees
+                meshes, origin = geometry.demo_terrain(.5, cfg)
+                self.assertAlmostEqual(origin[2], expected_start)
+                top = meshes[1].vertices[4:, 2]
+                self.assertAlmostEqual(top[1] - top[0], height if kind == "uphill" else -height)
 
     def test_rocks_are_repeatable_and_in_height_range(self):
         a, _ = geometry.demo_terrain(.5, self.cfg("rubble"))

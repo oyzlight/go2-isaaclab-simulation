@@ -17,7 +17,7 @@ class DemoTerrainCfg(SubTerrainBaseCfg):
     rock_height_range: tuple[float, float] = (0.04, 0.08)
     rock_radius_x_range: tuple[float, float] = (0.08, 0.16)
     rock_radius_y_range: tuple[float, float] = (0.07, 0.14)
-    slope_degrees: float = 10.0
+    slope_degrees: float = 15.0
     ramp_length: float = 4.0
     step_height: float = 0.08
     step_depth: float = 0.45
